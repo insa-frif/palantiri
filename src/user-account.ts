@@ -7,7 +7,7 @@ import {Connection} from "palantiri-interfaces";
 import {GroupAccount} from "palantiri-interfaces";
 import {Message} from "palantiri-interfaces";
 import {UserAccount} from "palantiri-interfaces";
-import {Proxy} from "palantiri-interfaces";
+import {ConnectedApi} from "palantiri-interfaces";
 import {Contact} from "palantiri-interfaces";
 import {utils} from "palantiri-interfaces";
 
