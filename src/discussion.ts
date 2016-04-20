@@ -81,11 +81,17 @@ export class OChatDiscussion implements Discussion {
               // to this discussion too, we win.
               if(ownerAccount.hasContactAccount(p.members[0])) {
                 // That's it, we win !
-                ownerAccount.driver.addMembersToGroupChat(p.members, compatibleParticipant, (err) => {
-                  if(!err) {
-                    compatibleParticipant.addMembers(p.members);
-                  }
-                });
+                ownerAccount.getOrCreateConnection()
+	                .then((co) => {
+		                co.getConnectedApi();
+	                })
+	                .then((api) => {
+		                api.addMembersToGroupChat(p.members, compatibleParticipant, (err) => {
+			                if(!err) {
+				                compatibleParticipant.addMembers(p.members);
+			                }
+		                });
+	                });
                 gotIt = true;
                 break;
               }
