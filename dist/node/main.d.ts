@@ -1,5 +1,4 @@
 export { OChatApp as App } from "./app";
-export { OChatConnection as Connection } from "./connection";
 export { OChatContact as Contact } from "./contact";
 export { OChatContactAccount as ContactAccount } from "./contact-account";
 export { OChatDiscussion as Discussion } from "./discussion";

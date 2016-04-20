@@ -1,8 +1,6 @@
 "use strict";
 var app_1 = require("./app");
 exports.App = app_1.OChatApp;
-var connection_1 = require("./connection");
-exports.Connection = connection_1.OChatConnection;
 var contact_1 = require("./contact");
 exports.Contact = contact_1.OChatContact;
 var contact_account_1 = require("./contact-account");
