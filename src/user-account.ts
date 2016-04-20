@@ -11,7 +11,7 @@ import {ConnectedApi} from "palantiri-interfaces";
 import {Contact} from "palantiri-interfaces";
 import {utils} from "palantiri-interfaces";
 
-export class OChatUserAccount implements UserAccount {
+export abstract class OChatUserAccount implements UserAccount {
   username: string;
 
 	protocol: string;
@@ -55,7 +55,7 @@ export class OChatUserAccount implements UserAccount {
 	  if(this.connection && this.connection.connected) {
 		  this.connection.getConnectedApi()
 			  .then((api) => {
-				  api.getDiscussions(this, max, filter);
+				  api.getDiscussions(that, max, filter);
 			  })
 		    .then((discussions) => {
 			    discuss = discussions;
@@ -64,14 +64,35 @@ export class OChatUserAccount implements UserAccount {
     return Bluebird.resolve(discuss);
   }
 
-  getOrCreateConnection(): Bluebird<Connection> {
-    if(this.connection && this.connection.connected) {
-      return Bluebird.resolve(this.connection);
-    }
-    return Bluebird.resolve(this.driver.createConnection(this));
-  }
+  abstract getOrCreateConnection(): Bluebird<Connection>;
+	//  This method is abstract because specific :
+	//  We can't instanciate a new Connection object without
+	//  just with new Connection(), because it depends of
+	//  the used protocol of this account.
 
-  sendMessageTo(recipients: GroupAccount, msg: Message, callback?: (err: Error, succes: Message) => any): void {
-    this.driver.sendMessage(msg, recipients, callback);
+  sendMessageTo(recipients: GroupAccount, msg: Message, callback?: (err: Error, succes: Message) => any): Bluebird.Thenable<UserAccount> {
+    let error: Error = null;
+		if(recipients.protocol !== this.protocol) {
+			error = new Error("Protocols are inconpatible.");
+		} else if (!this.connection || !this.connection.connected) {
+			error = new Error("You are not connected to the current account.");
+		} else {
+			this.connection.getConnectedApi().then((api) => {
+				api.sendMessage(msg, recipients, (err, message) => {
+					if(err) {
+						error = err;
+					}
+				});
+			});
+		}
+
+	  // TODO : et la, ca ne fait pas de la merde par hasard entre la promesse
+	  //        et les deux callbacks et le retour par promesse ?
+
+		if(callback) {
+			callback(error, msg);
+		}
+
+	  return Bluebird.resolve(this);
   }
 }
