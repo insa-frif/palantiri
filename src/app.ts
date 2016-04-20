@@ -1,8 +1,8 @@
 import * as Bluebird from "bluebird";
 
-import {User} from "./interfaces/user";
-import {Proxy} from "./interfaces/proxy";
-import {App} from "./interfaces/app";
+import {User} from "palantiri-interfaces";
+import {Proxy} from "palantiri-interfaces";
+import {App} from "palantiri-interfaces";
 
 export class OChatApp implements App {
   drivers: Proxy[] = [];  // All drivers supported by the app

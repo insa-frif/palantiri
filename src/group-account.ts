@@ -1,5 +1,5 @@
-import {ContactAccount} from "./interfaces/contact-account";
-import {GroupAccount} from "./interfaces/group-account";
+import {ContactAccount} from "palantiri-interfaces";
+import {GroupAccount} from "palantiri-interfaces";
 
 export class OChatGroupAccount implements GroupAccount {
   protocol: string;

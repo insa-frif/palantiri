@@ -1,11 +1,11 @@
 import * as Bluebird from "bluebird";
 
-import {User} from "./interfaces/user";
-import {Discussion} from "./interfaces/discussion";
-import {ContactAccount} from "./interfaces/contact-account";
-import {GroupAccount} from "./interfaces/group-account";
-import {Message} from "./interfaces/message";
-import {Dictionary} from "./interfaces/utils";
+import {User} from "palantiri-interfaces";
+import {Discussion} from "palantiri-interfaces";
+import {ContactAccount} from "palantiri-interfaces";
+import {GroupAccount} from "palantiri-interfaces";
+import {Message} from "palantiri-interfaces";
+import {utils} from "palantiri-interfaces";
 
 export class OChatDiscussion implements Discussion {
   creationDate: Date;
@@ -22,7 +22,7 @@ export class OChatDiscussion implements Discussion {
 
   owner: User;
 
-  settings: Dictionary<any>;
+  settings: utils.Dictionary<any>;
 
   getMessages(maxMessages: number, afterDate?: Date, filter?: (msg: Message) => boolean): Bluebird<Message[]> {
     // TODO : this depends on how we manage heterogeneous ContactAccount
@@ -129,7 +129,7 @@ export class OChatDiscussion implements Discussion {
     return Bluebird.resolve(this.description);
   }
 
-  getSettings(): Bluebird<Dictionary<any>> {
+  getSettings(): Bluebird<utils.Dictionary<any>> {
     return Bluebird.resolve(this.settings);
   }
 }

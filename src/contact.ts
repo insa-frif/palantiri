@@ -1,7 +1,7 @@
 import * as Bluebird from "bluebird";
 
-import {Contact} from "./interfaces/contact";
-import {ContactAccount} from "./interfaces/contact-account";
+import {Contact} from "palantiri-interfaces";
+import {ContactAccount} from "palantiri-interfaces";
 
 export class OChatContact implements Contact {
   fullname: string;

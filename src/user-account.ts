@@ -1,15 +1,15 @@
 import * as Bluebird from "bluebird";
 
-import {ContactAccount} from "./interfaces/contact-account";
-import {User} from "./interfaces/user";
-import {Discussion} from "./interfaces/discussion";
-import {Connection} from "./interfaces/connection";
-import {GroupAccount} from "./interfaces/group-account";
-import {Message} from "./interfaces/message";
-import {UserAccount} from "./interfaces/user-account";
-import {Proxy} from "./interfaces/proxy";
-import {Contact} from "./interfaces/contact";
-import {Dictionary} from "./interfaces/utils";
+import {ContactAccount} from "palantiri-interfaces";
+import {User} from "palantiri-interfaces";
+import {Discussion} from "palantiri-interfaces";
+import {Connection} from "palantiri-interfaces";
+import {GroupAccount} from "palantiri-interfaces";
+import {Message} from "palantiri-interfaces";
+import {UserAccount} from "palantiri-interfaces";
+import {Proxy} from "palantiri-interfaces";
+import {Contact} from "palantiri-interfaces";
+import {utils} from "palantiri-interfaces";
 
 export class OChatUserAccount implements UserAccount {
   username: string;
@@ -18,7 +18,7 @@ export class OChatUserAccount implements UserAccount {
 
   connection: Connection;
 
-  data: Dictionary<any>;
+  data: utils.Dictionary<any>;
 
   owner: User;
 

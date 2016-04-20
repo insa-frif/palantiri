@@ -1,10 +1,10 @@
 import * as Bluebird from "bluebird";
 
-import {Contact} from "./interfaces/contact";
-import {User} from "./interfaces/user";
-import {Discussion} from "./interfaces/discussion";
-import {UserAccount} from "./interfaces/user-account";
-import {GroupAccount} from "./interfaces/group-account";
+import {Contact} from "palantiri-interfaces";
+import {User} from "palantiri-interfaces";
+import {Discussion} from "palantiri-interfaces";
+import {UserAccount} from "palantiri-interfaces";
+import {GroupAccount} from "palantiri-interfaces";
 import {OChatApp} from "./app";
 
 export class OChatUser implements User {
