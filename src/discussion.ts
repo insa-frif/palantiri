@@ -26,7 +26,11 @@ export class OChatDiscussion implements Discussion {
 
   getMessages(maxMessages: number, afterDate?: Date, filter?: (msg: Message) => boolean): Bluebird<Message[]> {
     // TODO : this depends on how we manage heterogeneous ContactAccount
-    //        see above in OchatUser.getOrCreateDiscussion
+    //        see in OchatUser.getOrCreateDiscussion
+	  // NOTES : as discussed, the best for heterogeneous Discussions is to just getMessage
+	  //         not older than the creationDate of the discussion.
+	  //         In an extreme case, we can let the user did it, but he will then have to
+	  //         give us a method that merge messages, because it has no semantic for us.
     return undefined;
   }
 
@@ -36,10 +40,18 @@ export class OChatDiscussion implements Discussion {
       let gotIt: boolean = false;
       // TODO : rework this
       for(let ownerAccount of this.owner.accounts) {
-        if(ownerAccount.driver.isCompatibleWith(recipient.protocol)) {
-          ownerAccount.sendMessageTo(recipient, msg, callback);
-          gotIt = true;
-          break;
+        if(ownerAccount.protocol.toLowerCase() === recipient.protocol.toLowerCase()) {
+	        let hasAllAccounts: boolean = true;
+	        for(let recipAccount of recipient.members) {
+		        if(!ownerAccount.hasContactAccount(recipient[0])) {
+			        hasAllAccounts = false;
+			        break;
+		        }
+	        }
+	        if(hasAllAccounts) {
+		        ownerAccount.sendMessageTo(recipient, msg, callback);
+		        gotIt = true;
+	        }
         }
       }
       if(!err && !gotIt) {
