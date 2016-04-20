@@ -27,10 +27,10 @@ export class OChatDiscussion implements Discussion {
   getMessages(maxMessages: number, afterDate?: Date, filter?: (msg: Message) => boolean): Bluebird<Message[]> {
     // TODO : this depends on how we manage heterogeneous ContactAccount
     //        see in OchatUser.getOrCreateDiscussion
-	  // NOTES : as discussed, the best for heterogeneous Discussions is to just getMessage
-	  //         not older than the creationDate of the discussion.
-	  //         In an extreme case, we can let the user did it, but he will then have to
-	  //         give us a method that merge messages, because it has no semantic for us.
+    // NOTES : as discussed, the best for heterogeneous Discussions is to just getMessage
+    //         not older than the creationDate of the discussion.
+    //         In an extreme case, we can let the user did it, but he will then have to
+    //         give us a method that merge messages, because it has no semantic for us.
     return undefined;
   }
 
@@ -41,17 +41,17 @@ export class OChatDiscussion implements Discussion {
       // TODO : rework this
       for(let ownerAccount of this.owner.accounts) {
         if(ownerAccount.protocol.toLowerCase() === recipient.protocol.toLowerCase()) {
-	        let hasAllAccounts: boolean = true;
-	        for(let recipAccount of recipient.members) {
-		        if(!ownerAccount.hasContactAccount(recipient[0])) {
-			        hasAllAccounts = false;
-			        break;
-		        }
-	        }
-	        if(hasAllAccounts) {
-		        ownerAccount.sendMessageTo(recipient, msg, callback);
-		        gotIt = true;
-	        }
+          let hasAllAccounts: boolean = true;
+          for(let recipAccount of recipient.members) {
+            if(!ownerAccount.hasContactAccount(recipient[0])) {
+              hasAllAccounts = false;
+              break;
+            }
+          }
+          if(hasAllAccounts) {
+            ownerAccount.sendMessageTo(recipient, msg, callback);
+            gotIt = true;
+          }
         }
       }
       if(!err && !gotIt) {
@@ -82,16 +82,16 @@ export class OChatDiscussion implements Discussion {
               if(ownerAccount.hasContactAccount(p.members[0])) {
                 // That's it, we win !
                 ownerAccount.getOrCreateConnection()
-	                .then((co) => {
-		                co.getConnectedApi();
-	                })
-	                .then((api) => {
-		                api.addMembersToGroupChat(p.members, compatibleParticipant, (err) => {
-			                if(!err) {
-				                compatibleParticipant.addMembers(p.members);
-			                }
-		                });
-	                });
+                  .then((co) => {
+                    co.getConnectedApi();
+                  })
+                  .then((api) => {
+                    api.addMembersToGroupChat(p.members, compatibleParticipant, (err) => {
+                      if(!err) {
+                        compatibleParticipant.addMembers(p.members);
+                      }
+                    });
+                  });
                 gotIt = true;
                 break;
               }
@@ -137,6 +137,7 @@ export class OChatDiscussion implements Discussion {
   onMessage(callback: (msg: Message) => any): Bluebird<Discussion> {
     // TODO : see troubles in interfaces.ts before
     return undefined;
+
   }
 
   getName(): Bluebird<string> {
