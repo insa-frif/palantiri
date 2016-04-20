@@ -10,8 +10,6 @@ import {OChatApp} from "./app";
 export class OChatUser implements User {
   username: string;
 
-  app: OChatApp;
-
   accounts: UserAccount[] = [];
 
   getOrCreateDiscussion(accounts: GroupAccount[]): Bluebird<Discussion> {
@@ -120,13 +118,47 @@ export class OChatUser implements User {
     //        We will do this later.
   }
 
-  onDiscussionRequest(callback: (disc: Discussion) => any): User {
-    // TODO : see troubles in interfaces.ts before
-    return undefined;
-  }
+	connectionsOn(event: string, handler: (...args: any[]) => any): Bluebird.Thenable<User> {
+		for(let account of this.accounts) {
+			if(account.connection && account.connection.connected) {
+				account.getOrCreateConnection().then((co) => {
+					co.on(event, handler);
+				})
+			}
+		}
+		return Bluebird.resolve(this);
+	}
 
-  onContactRequest(callback: (contact: Contact)=> any): User {
-    // TODO : see troubles in interfaces.ts before
-    return undefined;
-  }
+	connectionsOnce(event: string, handler: (...args: any[]) => any): Bluebird.Thenable<User> {
+		for(let account of this.accounts) {
+			if(account.connection && account.connection.connected) {
+				account.getOrCreateConnection().then((co) => {
+					co.once(event, handler);
+				})
+			}
+		}
+		return Bluebird.resolve(this);
+	}
+
+	removeConnectionsListener(event: string, handler: (...args: any[]) => any): Bluebird.Thenable<User> {
+		for(let account of this.accounts) {
+			if(account.connection && account.connection.connected) {
+				account.getOrCreateConnection().then((co) => {
+					co.removeListener(event, handler);
+				})
+			}
+		}
+		return Bluebird.resolve(this);
+	}
+
+	connectionsSetMaxListeners(n: number): Bluebird.Thenable<User> {
+		for(let account of this.accounts) {
+			if(account.connection && account.connection.connected) {
+				account.getOrCreateConnection().then((co) => {
+					co.setMaxListeners(n);
+				})
+			}
+		}
+		return Bluebird.resolve(this);
+	}
 }
