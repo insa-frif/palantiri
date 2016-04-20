@@ -42,12 +42,13 @@ export class OChatUserAccount implements UserAccount {
   hasContactAccount(account: ContactAccount): Bluebird<boolean> {
     return Bluebird.resolve(this.getContacts().then((contacts): boolean => {
       for(let contact of contacts) {
-        if(contact.accounts[0].localID === account.localID) {
+        if(contact.localID === account.localID) {
           return true;
         }
       }
       return false;
     }));
+	  // TODO : et celui-la de retour, il est bon ?
   }
 
   getDiscussions(max?: number, filter?: (discuss: Discussion) => boolean): Bluebird<Discussion[]> {
