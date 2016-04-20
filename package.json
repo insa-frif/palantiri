@@ -1,11 +1,11 @@
 {
-  "name": "ochat",
-  "version": "1.0.2",
-  "description": "Omni chat.",
+  "name": "palantiri",
+  "version": "0.0.0",
+  "description": "Palantiri",
   "main": "dist/node/main.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/insa-frif/omni-chat.git"
+    "url": "git://github.com/insa-frif/palantiri.git"
   },
   "scripts": {
     "test": "gulp test"
