@@ -20,8 +20,6 @@ export class OChatUserAccount implements UserAccount {
 
   data: utils.Dictionary<any>;
 
-  owner: User;
-
   getContacts(): Bluebird<ContactAccount[]> {
 	  let accounts: ContactAccount[] = [];
 	  let that = this;
@@ -55,10 +53,6 @@ export class OChatUserAccount implements UserAccount {
     return Bluebird.resolve(this.driver.getDiscussions(this, max, filter));
   }
 
-  getOwner(): Bluebird<User> {
-    return Bluebird.resolve(this.owner);
-  }
-
   getOrCreateConnection(): Bluebird<Connection> {
     if(this.connection && this.connection.connected) {
       return Bluebird.resolve(this.connection);
@@ -68,9 +62,5 @@ export class OChatUserAccount implements UserAccount {
 
   sendMessageTo(recipients: GroupAccount, msg: Message, callback?: (err: Error, succes: Message) => any): void {
     this.driver.sendMessage(msg, recipients, callback);
-  }
-
-  constructor(owner: User) {
-    this.owner = owner;
   }
 }
