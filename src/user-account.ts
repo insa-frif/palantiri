@@ -14,14 +14,29 @@ import {utils} from "palantiri-interfaces";
 export class OChatUserAccount implements UserAccount {
   username: string;
 
+	protocol: string;
+
   connection: Connection;
 
   data: utils.Dictionary<any>;
 
   owner: User;
 
-  getContacts(): Bluebird<Contact[]> {
-    return Bluebird.resolve(this.driver.getContacts(this));
+  getContacts(): Bluebird<ContactAccount[]> {
+	  let accounts: ContactAccount[] = [];
+	  let that = this;
+	  if(this.connection && this.connection.connected) {
+		  this.connection.getConnectedApi()
+			  .then((api) => {
+				  api.getContacts(that);
+			  })
+		    .then((contactsAccounts) => {
+			    accounts = contactsAccounts;
+		    });
+	  }
+    return Bluebird.resolve(accounts);
+	  // TODO : mon enchainement de promesse est-il bon ?
+	  // TODO : de maniere plus generale, est ce que mes retours par promesse sont bons ?
   }
 
   hasContactAccount(account: ContactAccount): Bluebird<boolean> {
