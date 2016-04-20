@@ -14,8 +14,6 @@ import {utils} from "palantiri-interfaces";
 export class OChatUserAccount implements UserAccount {
   username: string;
 
-  driver: Proxy;
-
   connection: Connection;
 
   data: utils.Dictionary<any>;
