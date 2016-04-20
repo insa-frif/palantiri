@@ -50,7 +50,18 @@ export class OChatUserAccount implements UserAccount {
   }
 
   getDiscussions(max?: number, filter?: (discuss: Discussion) => boolean): Bluebird<Discussion[]> {
-    return Bluebird.resolve(this.driver.getDiscussions(this, max, filter));
+	  let discuss: Discussion[] = [];
+	  let that = this;
+	  if(this.connection && this.connection.connected) {
+		  this.connection.getConnectedApi()
+			  .then((api) => {
+				  api.getDiscussions(this, max, filter);
+			  })
+		    .then((discussions) => {
+			    discuss = discussions;
+		    });
+	  }
+    return Bluebird.resolve(discuss);
   }
 
   getOrCreateConnection(): Bluebird<Connection> {
