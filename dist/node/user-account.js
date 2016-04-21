@@ -45,14 +45,14 @@ var PalantiriUserAccount = (function () {
     //  We can't instanciate a new Connection object without
     //  just with new Connection(), because it depends of
     //  the used protocol of this account.
-    PalantiriUserAccount.prototype.sendMessageTo = function (recipients, msg, callback) {
+    PalantiriUserAccount.prototype.sendMessage = function (msg, discussion, callback) {
         var error = null;
         if (!this.connection || !this.connection.connected) {
             error = new Error("You are not connected to the current account.");
         }
         else {
             this.connection.getConnectedApi().then(function (api) {
-                api.sendMessage(msg, recipients, function (err, message) {
+                api.sendMessage(msg, discussion, function (err) {
                     if (err) {
                         error = err;
                     }
@@ -60,7 +60,7 @@ var PalantiriUserAccount = (function () {
             });
         }
         if (callback) {
-            callback(error, msg);
+            callback(error);
         }
         return Bluebird.resolve(this);
     };

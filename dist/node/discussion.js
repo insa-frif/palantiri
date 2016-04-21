@@ -15,18 +15,6 @@ var PalantiriDiscussion = (function () {
         //         give us a method that merge messages, because it has no semantic for us.
         return undefined;
     };
-    PalantiriDiscussion.prototype.sendMessage = function (msg, callback) {
-        var err = null;
-        this.owner.sendMessageTo(this.participants, msg, function (error, mess) {
-            if (error) {
-                err = error;
-            }
-        });
-        if (callback) {
-            callback(err, msg);
-        }
-        return Bluebird.resolve(this);
-    };
     PalantiriDiscussion.prototype.addParticipants = function (p) {
         var that = this;
         var error = null;

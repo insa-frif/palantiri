@@ -18,7 +18,6 @@ export declare class PalantiriDiscussion implements Discussion {
     settings: utils.Dictionary<any>;
     isCompatibleWith(protocol: string): boolean;
     getMessages(maxMessages: number, afterDate?: Date, filter?: (msg: Message) => boolean): Bluebird<Message[]>;
-    sendMessage(msg: Message, callback?: (err: Error, succes: Message) => any): Bluebird.Thenable<Discussion>;
     addParticipants(p: Contact[]): Bluebird<Discussion>;
     removeParticipants(contact: Contact[]): Bluebird<Discussion>;
     getParticipants(): Bluebird<Contact[]>;
