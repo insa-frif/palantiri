@@ -4,6 +4,7 @@ import {Discussion} from "palantiri-interfaces";
 import {Connection} from "palantiri-interfaces";
 import {Message} from "palantiri-interfaces";
 import {UserAccount} from "palantiri-interfaces";
+import {Contact} from "palantiri-interfaces";
 import {utils} from "palantiri-interfaces";
 
 export abstract class PalantiriUserAccount implements UserAccount {
@@ -15,8 +16,8 @@ export abstract class PalantiriUserAccount implements UserAccount {
 
   data: utils.Dictionary<any>;
 
-  getContacts(): Bluebird<ContactAccount[]> {
-	  let accounts: ContactAccount[] = [];
+  getContacts(): Bluebird<Contact[]> {
+	  let accounts: Contact[] = [];
 	  let that = this;
 	  if(this.connection && this.connection.connected) {
 		  this.connection.getConnectedApi()
@@ -28,11 +29,9 @@ export abstract class PalantiriUserAccount implements UserAccount {
 		    });
 	  }
     return Bluebird.resolve(accounts);
-	  // TODO : mon enchainement de promesse est-il bon ?
-	  // TODO : de maniere plus generale, est ce que mes retours par promesse sont bons ?
   }
 
-  hasContactAccount(account: ContactAccount): Bluebird<boolean> {
+  hasContactAccount(account: Contact): Bluebird<boolean> {
     return Bluebird.resolve(this.getContacts().then((contacts): boolean => {
       for(let contact of contacts) {
         if(contact.localID === account.localID) {
@@ -41,7 +40,6 @@ export abstract class PalantiriUserAccount implements UserAccount {
       }
       return false;
     }));
-	  // TODO : et celui-la de retour, il est bon ?
   }
 
   getDiscussions(max?: number, filter?: (discuss: Discussion) => boolean): Bluebird<Discussion[]> {
@@ -65,11 +63,9 @@ export abstract class PalantiriUserAccount implements UserAccount {
 	//  just with new Connection(), because it depends of
 	//  the used protocol of this account.
 
-  sendMessageTo(recipients: GroupAccount, msg: Message, callback?: (err: Error, succes: Message) => any): Bluebird.Thenable<UserAccount> {
+  sendMessageTo(recipients: Contact[], msg: Message, callback?: (err: Error, succes: Message) => any): Bluebird.Thenable<UserAccount> {
     let error: Error = null;
-		if(recipients.protocol !== this.protocol) {
-			error = new Error("Protocols are inconpatible.");
-		} else if (!this.connection || !this.connection.connected) {
+		if (!this.connection || !this.connection.connected) {
 			error = new Error("You are not connected to the current account.");
 		} else {
 			this.connection.getConnectedApi().then((api) => {
@@ -80,9 +76,6 @@ export abstract class PalantiriUserAccount implements UserAccount {
 				});
 			});
 		}
-
-	  // TODO : et la, ca ne fait pas de la merde par hasard entre la promesse
-	  //        et les deux callbacks et le retour par promesse ?
 
 		if(callback) {
 			callback(error, msg);
