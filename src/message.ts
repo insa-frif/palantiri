@@ -1,6 +1,6 @@
 import * as Bluebird from "bluebird";
 
-import {ContactAccount} from "palantiri-interfaces";
+import {Contact} from "palantiri-interfaces";
 import {UserAccount} from "palantiri-interfaces";
 import {Message} from "palantiri-interfaces";
 
@@ -13,8 +13,8 @@ const MSG_FLAG_FIL = 0x0008;   //  The message contains other file(s)
 const MSG_FLAG_URL = 0x0010;   //  The message contains an URL
 const MSG_FLAG_EDI = 0x0100;   //  The message is editable
 
-export class OChatMessage implements Message {
-  author: ContactAccount | UserAccount;
+export class PalantiriMessage implements Message {
+  author: Contact | UserAccount;
 
   body: string;
 
@@ -38,7 +38,7 @@ export class OChatMessage implements Message {
     return Bluebird.resolve(this.lastUpdated);
   }
 
-  getAuthor(): Bluebird<ContactAccount | UserAccount> {
+  getAuthor(): Bluebird<Contact | UserAccount> {
     return Bluebird.resolve(this.author);
   }
 
