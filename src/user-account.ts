@@ -22,7 +22,7 @@ export abstract class PalantiriUserAccount implements UserAccount {
 	  if(this.connection && this.connection.connected) {
 		  this.connection.getConnectedApi()
 			  .then((api) => {
-				  return api.getContacts(that);
+				  return api.getContacts();
 			  })
 		    .then((contactsAccounts) => {
 			    accounts = contactsAccounts;
@@ -48,7 +48,7 @@ export abstract class PalantiriUserAccount implements UserAccount {
 	  if(this.connection && this.connection.connected) {
 		  this.connection.getConnectedApi()
 			  .then((api) => {
-				  return api.getDiscussions(that, max, filter);
+				  return api.getDiscussions(max, filter);
 			  })
 		    .then((discussions) => {
 			    discuss = discussions;
