@@ -1,14 +1,11 @@
 import * as Bluebird from "bluebird";
 
 import {ContactAccount} from "palantiri-interfaces";
-import {User} from "palantiri-interfaces";
 import {Discussion} from "palantiri-interfaces";
 import {Connection} from "palantiri-interfaces";
 import {GroupAccount} from "palantiri-interfaces";
 import {Message} from "palantiri-interfaces";
 import {UserAccount} from "palantiri-interfaces";
-import {ConnectedApi} from "palantiri-interfaces";
-import {Contact} from "palantiri-interfaces";
 import {utils} from "palantiri-interfaces";
 
 export abstract class OChatUserAccount implements UserAccount {
@@ -26,7 +23,7 @@ export abstract class OChatUserAccount implements UserAccount {
 	  if(this.connection && this.connection.connected) {
 		  this.connection.getConnectedApi()
 			  .then((api) => {
-				  api.getContacts(that);
+				  return api.getContacts(that);
 			  })
 		    .then((contactsAccounts) => {
 			    accounts = contactsAccounts;
@@ -55,7 +52,7 @@ export abstract class OChatUserAccount implements UserAccount {
 	  if(this.connection && this.connection.connected) {
 		  this.connection.getConnectedApi()
 			  .then((api) => {
-				  api.getDiscussions(that, max, filter);
+				  return api.getDiscussions(that, max, filter);
 			  })
 		    .then((discussions) => {
 			    discuss = discussions;
