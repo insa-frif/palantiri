@@ -27,7 +27,7 @@ var OChatApp = (function () {
         if (callback) {
             callback(err, this.users);
         }
-        return this;
+        return Bluebird.resolve(this);
     };
     OChatApp.prototype.removeUser = function (user, callback) {
         var err = null;
@@ -40,7 +40,7 @@ var OChatApp = (function () {
         if (callback) {
             callback(err, this.users);
         }
-        return this;
+        return Bluebird.resolve(this);
     };
     return OChatApp;
 }());

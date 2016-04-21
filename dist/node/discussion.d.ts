@@ -15,7 +15,7 @@ export declare class OChatDiscussion implements Discussion {
     owner: User;
     settings: utils.Dictionary<any>;
     getMessages(maxMessages: number, afterDate?: Date, filter?: (msg: Message) => boolean): Bluebird<Message[]>;
-    sendMessage(msg: Message, callback?: (err: Error, succes: Message) => any): void;
+    sendMessage(msg: Message, callback?: (err: Error, succes: Message) => any): Bluebird.Thenable<Discussion>;
     addParticipants(p: GroupAccount): Bluebird<Discussion>;
     removeParticipants(contactAccount: ContactAccount): Bluebird<Discussion>;
     getParticipants(): Bluebird<GroupAccount[]>;

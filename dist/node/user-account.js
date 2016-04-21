@@ -9,7 +9,7 @@ var OChatUserAccount = (function () {
         if (this.connection && this.connection.connected) {
             this.connection.getConnectedApi()
                 .then(function (api) {
-                api.getContacts(that);
+                return api.getContacts(that);
             })
                 .then(function (contactsAccounts) {
                 accounts = contactsAccounts;
@@ -37,7 +37,7 @@ var OChatUserAccount = (function () {
         if (this.connection && this.connection.connected) {
             this.connection.getConnectedApi()
                 .then(function (api) {
-                api.getDiscussions(that, max, filter);
+                return api.getDiscussions(that, max, filter);
             })
                 .then(function (discussions) {
                 discuss = discussions;

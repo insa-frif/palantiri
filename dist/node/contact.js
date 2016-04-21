@@ -14,6 +14,7 @@ var OChatContact = (function () {
     };
     OChatContact.prototype.setPrincipalName = function (newPrincipalName) {
         this.fullname = newPrincipalName;
+        return Bluebird.resolve(this);
     };
     OChatContact.prototype.mergeContacts = function (contact, callback) {
         var error = null;
@@ -35,7 +36,7 @@ var OChatContact = (function () {
         if (callback) {
             callback(error, this);
         }
-        return this;
+        return Bluebird.resolve(this);
     };
     OChatContact.prototype.unmergeContacts = function (contact, callback) {
         var error = null;
@@ -53,7 +54,7 @@ var OChatContact = (function () {
         if (callback) {
             callback(error, this);
         }
-        return this;
+        return Bluebird.resolve(this);
     };
     OChatContact.prototype.addAccount = function (account, callback) {
         var index = this.accounts.indexOf(account);
@@ -71,6 +72,7 @@ var OChatContact = (function () {
         if (callback) {
             callback(err, this.accounts);
         }
+        return Bluebird.resolve(this);
     };
     OChatContact.prototype.removeAccount = function (account, callback) {
         var index = this.accounts.indexOf(account);
@@ -85,6 +87,7 @@ var OChatContact = (function () {
         if (callback) {
             callback(err, this.accounts);
         }
+        return Bluebird.resolve(this);
     };
     return OChatContact;
 }());

@@ -1,4 +1,5 @@
 "use strict";
+var Bluebird = require("bluebird");
 var OChatGroupAccount = (function () {
     function OChatGroupAccount() {
     }
@@ -25,6 +26,7 @@ var OChatGroupAccount = (function () {
         if (callback) {
             callback(err, this.members);
         }
+        return Bluebird.resolve(this);
     };
     return OChatGroupAccount;
 }());

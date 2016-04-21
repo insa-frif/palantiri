@@ -8,9 +8,9 @@ export declare class OChatContact implements Contact {
     getAccounts(): Bluebird<ContactAccount[]>;
     getNicknames(): string[];
     getPrincipalName(): string;
-    setPrincipalName(newPrincipalName: string): void;
-    mergeContacts(contact: Contact, callback?: (err: Error, succes: Contact) => any): Contact;
-    unmergeContacts(contact: Contact, callback?: (err: Error, succes: Contact) => any): Contact;
-    addAccount(account: ContactAccount, callback?: (err: Error, succes: ContactAccount[]) => any): void;
-    removeAccount(account: ContactAccount, callback?: (err: Error, succes: ContactAccount[]) => any): void;
+    setPrincipalName(newPrincipalName: string): Bluebird.Thenable<Contact>;
+    mergeContacts(contact: Contact, callback?: (err: Error, succes: Contact) => any): Bluebird.Thenable<Contact>;
+    unmergeContacts(contact: Contact, callback?: (err: Error, succes: Contact) => any): Bluebird.Thenable<Contact>;
+    addAccount(account: ContactAccount, callback?: (err: Error, succes: ContactAccount[]) => any): Bluebird.Thenable<Contact>;
+    removeAccount(account: ContactAccount, callback?: (err: Error, succes: ContactAccount[]) => any): Bluebird.Thenable<Contact>;
 }

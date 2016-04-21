@@ -17,14 +17,13 @@ var OChatDiscussion = (function () {
         for (var _i = 0, _a = this.participants; _i < _a.length; _i++) {
             var recipient = _a[_i];
             var gotIt = false;
-            // TODO : rework this
             for (var _b = 0, _c = this.owner.accounts; _b < _c.length; _b++) {
                 var ownerAccount = _c[_b];
                 if (ownerAccount.protocol.toLowerCase() === recipient.protocol.toLowerCase()) {
                     var hasAllAccounts = true;
                     for (var _d = 0, _e = recipient.members; _d < _e.length; _d++) {
                         var recipAccount = _e[_d];
-                        if (!ownerAccount.hasContactAccount(recipient[0])) {
+                        if (!ownerAccount.hasContactAccount(recipAccount)) {
                             hasAllAccounts = false;
                             break;
                         }
@@ -39,7 +38,10 @@ var OChatDiscussion = (function () {
                 err = new Error("At least one recipient could not be served.");
             }
         }
-        callback(err, msg);
+        if (callback) {
+            callback(err, msg);
+        }
+        return Bluebird.resolve(this);
     };
     OChatDiscussion.prototype.addParticipants = function (p) {
         var _this = this;
@@ -68,7 +70,7 @@ var OChatDiscussion = (function () {
                                 //        or it could lead to some problems.
                                 ownerAccount.getOrCreateConnection()
                                     .then(function (co) {
-                                    co.getConnectedApi();
+                                    return co.getConnectedApi();
                                 })
                                     .then(function (api) {
                                     api.addMembersToGroupChat(p.members, compatibleParticipant, function (err) {
