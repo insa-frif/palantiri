@@ -34,7 +34,7 @@ export class OChatDiscussion implements Discussion {
     return undefined;
   }
 
-  sendMessage(msg: Message, callback?: (err: Error, succes: Message) => any): void {
+  sendMessage(msg: Message, callback?: (err: Error, succes: Message) => any): Bluebird.Thenable<Discussion> {
     let err: Error = null;
     for(let recipient of this.participants) {
       let gotIt: boolean = false;
@@ -58,7 +58,10 @@ export class OChatDiscussion implements Discussion {
         err = new Error("At least one recipient could not be served.");
       }
     }
-    callback(err, msg);
+	  if(callback) {
+		  callback(err, msg);
+	  }
+    return Bluebird.resolve(this);
   }
 
   addParticipants(p: GroupAccount): Bluebird<Discussion> {
