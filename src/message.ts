@@ -3,15 +3,7 @@ import * as Bluebird from "bluebird";
 import {Contact} from "palantiri-interfaces";
 import {UserAccount} from "palantiri-interfaces";
 import {Message} from "palantiri-interfaces";
-
-// TODO: export MessageFlags in "palantiri-interfaces"
-// temporary hack, quickly fix this !!!
-const MSG_FLAG_TXT = 0x0001;   //  The message contains text
-const MSG_FLAG_IMG = 0x0002;   //  The message contains picture(s)
-const MSG_FLAG_VID = 0x0004;   //  The message contains video(s)
-const MSG_FLAG_FIL = 0x0008;   //  The message contains other file(s)
-const MSG_FLAG_URL = 0x0010;   //  The message contains an URL
-const MSG_FLAG_EDI = 0x0100;   //  The message is editable
+import {MessageFlags} from "palantiri-interfaces";
 
 export class PalantiriMessage implements Message {
   author: Contact | UserAccount;
@@ -51,6 +43,6 @@ export class PalantiriMessage implements Message {
   }
 
   isEditable(): boolean {
-    return (this.flags & MSG_FLAG_EDI) === MSG_FLAG_EDI;
+    return (this.flags & MessageFlags.EDITABLE) === MessageFlags.EDITABLE;
   }
 }

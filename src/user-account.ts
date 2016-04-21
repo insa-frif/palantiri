@@ -18,7 +18,6 @@ export abstract class PalantiriUserAccount implements UserAccount {
 
   getContacts(): Bluebird<Contact[]> {
 	  let accounts: Contact[] = [];
-	  let that = this;
 	  if(this.connection && this.connection.connected) {
 		  this.connection.getConnectedApi()
 			  .then((api) => {
@@ -44,7 +43,6 @@ export abstract class PalantiriUserAccount implements UserAccount {
 
   getDiscussions(max?: number, filter?: (discuss: Discussion) => boolean): Bluebird<Discussion[]> {
 	  let discuss: Discussion[] = [];
-	  let that = this;
 	  if(this.connection && this.connection.connected) {
 		  this.connection.getConnectedApi()
 			  .then((api) => {

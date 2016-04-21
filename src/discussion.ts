@@ -18,8 +18,6 @@ export class PalantiriDiscussion implements Discussion {
 
   isPrivate: boolean;
 
-  heterogeneous: boolean;
-
   description: string;
 
   participants: Contact[];
