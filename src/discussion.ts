@@ -42,19 +42,6 @@ export class PalantiriDiscussion implements Discussion {
     return undefined;
   }
 
-  sendMessage(msg: Message, callback?: (err: Error, succes: Message) => any): Bluebird.Thenable<Discussion> {
-    let err: Error = null;
-    this.owner.sendMessageTo(this.participants, msg, (error, mess) => {
-	    if(error) {
-		    err = error;
-	    }
-    });
-	  if(callback) {
-		  callback(err, msg);
-	  }
-    return Bluebird.resolve(this);
-  }
-
   addParticipants(p: Contact[]): Bluebird<Discussion> {
 	  let that = this;
 	  let error: Error = null;
