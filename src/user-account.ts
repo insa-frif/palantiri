@@ -1,14 +1,12 @@
 import * as Bluebird from "bluebird";
 
-import {ContactAccount} from "palantiri-interfaces";
 import {Discussion} from "palantiri-interfaces";
 import {Connection} from "palantiri-interfaces";
-import {GroupAccount} from "palantiri-interfaces";
 import {Message} from "palantiri-interfaces";
 import {UserAccount} from "palantiri-interfaces";
 import {utils} from "palantiri-interfaces";
 
-export abstract class OChatUserAccount implements UserAccount {
+export abstract class PalantiriUserAccount implements UserAccount {
   username: string;
 
 	protocol: string;
