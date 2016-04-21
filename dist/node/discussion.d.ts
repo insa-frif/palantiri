@@ -1,26 +1,28 @@
 import * as Bluebird from "bluebird";
-import { User } from "palantiri-interfaces";
 import { Discussion } from "palantiri-interfaces";
-import { ContactAccount } from "palantiri-interfaces";
-import { GroupAccount } from "palantiri-interfaces";
+import { DiscussionAuthorization } from "palantiri-interfaces";
+import { Contact } from "palantiri-interfaces";
 import { Message } from "palantiri-interfaces";
+import { UserAccount } from "palantiri-interfaces";
 import { utils } from "palantiri-interfaces";
-export declare class OChatDiscussion implements Discussion {
+export declare class PalantiriDiscussion implements Discussion {
+    protocol: string;
+    localDiscussionID: number;
     creationDate: Date;
     name: string;
     isPrivate: boolean;
-    heterogeneous: boolean;
     description: string;
-    participants: GroupAccount[];
-    owner: User;
+    participants: Contact[];
+    owner: UserAccount;
+    authorizations: DiscussionAuthorization;
     settings: utils.Dictionary<any>;
+    isCompatibleWith(protocol: string): boolean;
     getMessages(maxMessages: number, afterDate?: Date, filter?: (msg: Message) => boolean): Bluebird<Message[]>;
     sendMessage(msg: Message, callback?: (err: Error, succes: Message) => any): Bluebird.Thenable<Discussion>;
-    addParticipants(p: GroupAccount): Bluebird<Discussion>;
-    removeParticipants(contactAccount: ContactAccount): Bluebird<Discussion>;
-    getParticipants(): Bluebird<GroupAccount[]>;
-    onMessage(callback: (msg: Message) => any): Bluebird<Discussion>;
-    getName(): Bluebird<string>;
-    getDescription(): Bluebird<string>;
-    getSettings(): Bluebird<utils.Dictionary<any>>;
+    addParticipants(p: Contact[]): Bluebird<Discussion>;
+    removeParticipants(contact: Contact[]): Bluebird<Discussion>;
+    getParticipants(): Bluebird<Contact[]>;
+    getName(): string;
+    getDescription(): string;
+    getSettings(): utils.Dictionary<any>;
 }

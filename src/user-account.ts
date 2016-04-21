@@ -43,10 +43,11 @@ export abstract class PalantiriUserAccount implements UserAccount {
 
   getDiscussions(max?: number, filter?: (discuss: Discussion) => boolean): Bluebird<Discussion[]> {
 	  let discuss: Discussion[] = [];
+	  let that = this;
 	  if(this.connection && this.connection.connected) {
 		  this.connection.getConnectedApi()
 			  .then((api) => {
-				  return api.getDiscussions(max, filter);
+				  return api.getDiscussions(that, max, filter);
 			  })
 		    .then((discussions) => {
 			    discuss = discussions;
