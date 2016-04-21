@@ -29,10 +29,11 @@ var PalantiriUserAccount = (function () {
     };
     PalantiriUserAccount.prototype.getDiscussions = function (max, filter) {
         var discuss = [];
+        var that = this;
         if (this.connection && this.connection.connected) {
             this.connection.getConnectedApi()
                 .then(function (api) {
-                return api.getDiscussions(max, filter);
+                return api.getDiscussions(that, max, filter);
             })
                 .then(function (discussions) {
                 discuss = discussions;

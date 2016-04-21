@@ -62,13 +62,13 @@ export abstract class PalantiriUserAccount implements UserAccount {
 	//  just with new Connection(), because it depends of
 	//  the used protocol of this account.
 
-  sendMessageTo(recipients: Contact[], msg: Message, callback?: (err: Error, succes: Message) => any): Bluebird.Thenable<UserAccount> {
+  sendMessage(msg: Message, discussion: Discussion, callback?: (err: Error) => any): Bluebird.Thenable<UserAccount> {
     let error: Error = null;
 		if (!this.connection || !this.connection.connected) {
 			error = new Error("You are not connected to the current account.");
 		} else {
 			this.connection.getConnectedApi().then((api) => {
-				api.sendMessage(msg, recipients, (err, message) => {
+				api.sendMessage(msg, discussion, (err) => {
 					if(err) {
 						error = err;
 					}
@@ -77,7 +77,7 @@ export abstract class PalantiriUserAccount implements UserAccount {
 		}
 
 		if(callback) {
-			callback(error, msg);
+			callback(error);
 		}
 
 	  return Bluebird.resolve(this);
