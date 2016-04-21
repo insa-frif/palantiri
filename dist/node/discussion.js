@@ -5,7 +5,11 @@ var OChatDiscussion = (function () {
     }
     OChatDiscussion.prototype.getMessages = function (maxMessages, afterDate, filter) {
         // TODO : this depends on how we manage heterogeneous ContactAccount
-        //        see above in OchatUser.getOrCreateDiscussion
+        //        see in OchatUser.getOrCreateDiscussion
+        // NOTES : as discussed, the best for heterogeneous Discussions is to just getMessage
+        //         not older than the creationDate of the discussion.
+        //         In an extreme case, we can let the user did it, but he will then have to
+        //         give us a method that merge messages, because it has no semantic for us.
         return undefined;
     };
     OChatDiscussion.prototype.sendMessage = function (msg, callback) {
@@ -16,10 +20,19 @@ var OChatDiscussion = (function () {
             // TODO : rework this
             for (var _b = 0, _c = this.owner.accounts; _b < _c.length; _b++) {
                 var ownerAccount = _c[_b];
-                if (ownerAccount.driver.isCompatibleWith(recipient.protocol)) {
-                    ownerAccount.sendMessageTo(recipient, msg, callback);
-                    gotIt = true;
-                    break;
+                if (ownerAccount.protocol.toLowerCase() === recipient.protocol.toLowerCase()) {
+                    var hasAllAccounts = true;
+                    for (var _d = 0, _e = recipient.members; _d < _e.length; _d++) {
+                        var recipAccount = _e[_d];
+                        if (!ownerAccount.hasContactAccount(recipient[0])) {
+                            hasAllAccounts = false;
+                            break;
+                        }
+                    }
+                    if (hasAllAccounts) {
+                        ownerAccount.sendMessageTo(recipient, msg, callback);
+                        gotIt = true;
+                    }
                 }
             }
             if (!err && !gotIt) {
@@ -51,10 +64,16 @@ var OChatDiscussion = (function () {
                             // to this discussion too, we win.
                             if (ownerAccount.hasContactAccount(p.members[0])) {
                                 // That's it, we win !
-                                ownerAccount.driver.addMembersToGroupChat(p.members, compatibleParticipant, function (err) {
-                                    if (!err) {
-                                        compatibleParticipant.addMembers(p.members);
-                                    }
+                                ownerAccount.getOrCreateConnection()
+                                    .then(function (co) {
+                                    co.getConnectedApi();
+                                })
+                                    .then(function (api) {
+                                    api.addMembersToGroupChat(p.members, compatibleParticipant, function (err) {
+                                        if (!err) {
+                                            compatibleParticipant.addMembers(p.members);
+                                        }
+                                    });
                                 });
                                 gotIt = true;
                                 break;
