@@ -87,7 +87,7 @@ export class OChatDiscussion implements Discussion {
 	              //        or it could lead to some problems.
                 ownerAccount.getOrCreateConnection()
                   .then((co) => {
-                    co.getConnectedApi();
+                    return co.getConnectedApi();
                   })
                   .then((api) => {
                     api.addMembersToGroupChat(p.members, compatibleParticipant, (err) => {
