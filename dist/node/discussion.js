@@ -64,6 +64,8 @@ var OChatDiscussion = (function () {
                             // to this discussion too, we win.
                             if (ownerAccount.hasContactAccount(p.members[0])) {
                                 // That's it, we win !
+                                // TODO : well, almost. We need to check if every member is accessible,
+                                //        or it could lead to some problems.
                                 ownerAccount.getOrCreateConnection()
                                     .then(function (co) {
                                     co.getConnectedApi();

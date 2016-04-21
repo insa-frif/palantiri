@@ -19,7 +19,7 @@ export class OChatApp implements App {
     return Bluebird.resolve(this.users);
   }
 
-  addUser(user: User, callback?: (err: Error, users: User[]) => any): OChatApp {
+  addUser(user: User, callback?: (err: Error, users: User[]) => any): Bluebird.Thenable<OChatApp> {
     let err: Error = null;
     if(this.users.indexOf(user) === -1) {
       err = new Error("This user is already connected to this client.");
@@ -29,10 +29,10 @@ export class OChatApp implements App {
     if(callback) {
       callback(err, this.users);
     }
-    return this;
+    return Bluebird.resolve(this);
   }
 
-  removeUser(user: User, callback?: (err: Error, users: User[]) => any): OChatApp {
+  removeUser(user: User, callback?: (err: Error, users: User[]) => any): Bluebird.Thenable<OChatApp> {
     let err: Error = null;
     if(this.users.indexOf(user) === -1) {
       err = new Error("This user was not connected to this client.");
@@ -42,6 +42,6 @@ export class OChatApp implements App {
     if(callback) {
       callback(err, this.users);
     }
-    return this;
+    return Bluebird.resolve(this);
   }
 }
