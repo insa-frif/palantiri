@@ -38,12 +38,11 @@ export class OChatDiscussion implements Discussion {
     let err: Error = null;
     for(let recipient of this.participants) {
       let gotIt: boolean = false;
-      // TODO : rework this
       for(let ownerAccount of this.owner.accounts) {
         if(ownerAccount.protocol.toLowerCase() === recipient.protocol.toLowerCase()) {
           let hasAllAccounts: boolean = true;
           for(let recipAccount of recipient.members) {
-            if(!ownerAccount.hasContactAccount(recipient[0])) {
+            if(!ownerAccount.hasContactAccount(recipAccount)) {
               hasAllAccounts = false;
               break;
             }
