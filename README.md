@@ -1,5 +1,7 @@
 # Palantiri
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/ocilo/palantiri.svg)](https://greenkeeper.io/)
+
 ## Description
 
 Palantiri is a service library based on the library Palantiri-interfaces
